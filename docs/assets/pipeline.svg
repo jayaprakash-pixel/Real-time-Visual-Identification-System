@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 190" width="900" height="190" role="img" aria-label="Pipeline: camera, buffer, detect, track, embed, match, verify, alert">
+  <rect width="900" height="190" rx="14" fill="#0f0e17"/>
+  <style>.n{fill:#1a1625;stroke:#8b5cf6;stroke-width:1.5}.t{font:600 12px Segoe UI,Arial,sans-serif;fill:#f1f5f9;text-anchor:middle}.s{font:10px Segoe UI,Arial,sans-serif;fill:#94a3b8;text-anchor:middle}
+  .f{stroke:#ec4899;stroke-width:2;stroke-dasharray:6 6;animation:d 1s linear infinite;fill:none}@keyframes d{to{stroke-dashoffset:-12}}
+  .a{animation:p 4s ease-in-out infinite}@keyframes p{0%,100%{stroke:#8b5cf6}50%{stroke:#14b8a6}}</style>
+  <path class="f" d="M105 95H135M215 95H245M325 95H355M435 95H465M545 95H575M655 95H685M765 95H795"/>
+  <g>
+    <rect class="n a" x="25" y="65" width="80" height="60" rx="10" style="animation-delay:0s"/><text class="t" x="65" y="92">Camera</text><text class="s" x="65" y="108">phone/CCTV</text>
+    <rect class="n a" x="135" y="65" width="80" height="60" rx="10" style="animation-delay:.5s"/><text class="t" x="175" y="92">Buffer</text><text class="s" x="175" y="108">latest frame</text>
+    <rect class="n a" x="245" y="65" width="80" height="60" rx="10" style="animation-delay:1s"/><text class="t" x="285" y="92">Detect</text><text class="s" x="285" y="108">YuNet</text>
+    <rect class="n a" x="355" y="65" width="80" height="60" rx="10" style="animation-delay:1.5s"/><text class="t" x="395" y="92">Track</text><text class="s" x="395" y="108">track IDs</text>
+    <rect class="n a" x="465" y="65" width="80" height="60" rx="10" style="animation-delay:2s"/><text class="t" x="505" y="92">Embed</text><text class="s" x="505" y="108">SFace 128-d</text>
+    <rect class="n a" x="575" y="65" width="80" height="60" rx="10" style="animation-delay:2.5s"/><text class="t" x="615" y="92">Match</text><text class="s" x="615" y="108">cosine ≥ 0.363</text>
+    <rect class="n a" x="685" y="65" width="80" height="60" rx="10" style="animation-delay:3s"/><text class="t" x="725" y="92">Verify</text><text class="s" x="725" y="108">3 of 5 frames</text>
+    <rect class="n a" x="795" y="65" width="80" height="60" rx="10" style="animation-delay:3.5s"/><text class="t" x="835" y="92">Alert</text><text class="s" x="835" y="108">scene + log</text>
+  </g>
+</svg>
