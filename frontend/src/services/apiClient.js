@@ -9,9 +9,18 @@
 /**
  * Global mock toggle. Set to `false` when connecting to a real backend.
  */
-export const USE_MOCK = true
+export const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'
 
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+
+/**
+ * Turn a server-relative URL (e.g. "/api/detections/1/scene?token=...") into an absolute one,
+ * so images and the stream also work when the frontend runs on a different port (Vite dev).
+ */
+export function serverUrl(path) {
+  if (!path || /^(https?:|data:|blob:)/.test(path)) return path
+  return new URL(path, new URL(BASE_URL, window.location.href).origin).href
+}
 
 // Storage key for the authentication JWT / session token
 const TOKEN_KEY = 'sentinel_token'

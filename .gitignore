@@ -18,3 +18,11 @@ dist/
 Thumbs.db
 .DS_Store
 ~$*
+
+# e2e output (screenshots can contain faces)
+e2e/*.png
+e2e/node_modules/
+
+# tracker state and run logs (the committed mirror is phasedoc/BUILDPLAN.md)
+phasedoc/plan.db
+*.log

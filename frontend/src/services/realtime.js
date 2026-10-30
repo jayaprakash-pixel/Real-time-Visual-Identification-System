@@ -22,10 +22,12 @@
  *   }
  */
 
-import { USE_MOCK, getAuthToken } from './apiClient'
+import { USE_MOCK, getAuthToken, serverUrl } from './apiClient'
 import { MOCK_PERSONS, CAMERA_SOURCES, generateMockSceneSvg } from './detectionsApi'
 
-export const REALTIME_URL = import.meta.env.VITE_REALTIME_URL || ''
+// Same-origin deployments (server serves the frontend) need no env var.
+export const REALTIME_URL =
+  import.meta.env.VITE_REALTIME_URL || window.location.origin.replace(/^http/, 'ws') + '/alerts'
 
 /**
  * Subscribe to real-time detection alerts with auto-reconnect.
@@ -117,7 +119,7 @@ export function subscribeToAlerts(onAlert, onStatusChange) {
         try {
           const data = JSON.parse(event.data)
           if (data && typeof onAlert === 'function') {
-            onAlert(data)
+            onAlert({ ...data, sceneImageUrl: serverUrl(data.sceneImageUrl), thumbnailUrl: serverUrl(data.thumbnailUrl) })
           }
         } catch (err) {
           console.warn('[Realtime] Failed to parse alert message:', err)

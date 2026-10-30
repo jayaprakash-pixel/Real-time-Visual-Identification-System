@@ -5,9 +5,9 @@ const REPO = 'https://github.com/jayaprakash-pixel/Real-time-Visual-Identificati
 
 // status is deliberately honest: built / partial / roadmap
 const MODULES = [
-  { n: '01', t: 'Registration & Database', s: 'partial', d: 'React frontend, Supabase persons table, photo upload. Not yet linked to the AI module.' },
+  { n: '01', t: 'Registration & Database', s: 'partial', d: 'React console, Supabase persons and photos. Wired to the real server; Supabase sync not yet run against the live project.' },
   { n: '02', t: 'AI Vision & Recognition', s: 'built', d: 'Frame buffer, YuNet, SFace, tracking, quality gate, 3-of-5 verification, evidence capture.' },
-  { n: '03', t: 'Intelligence & Alerts', s: 'roadmap', d: 'Only a console/beep demo exists today. The real alert service is next.' },
+  { n: '03', t: 'Intelligence & Alerts', s: 'built', d: 'Alert gate, detection store, live popup + alarm, WebSocket, REST API. Verified end to end on video.' },
 ]
 const STEPS = ['Camera', 'Latest-frame buffer', 'Detect (YuNet)', 'Track IDs', 'Embed (SFace)', 'Cosine match', '3-of-5 verify', 'Scene + alert']
 

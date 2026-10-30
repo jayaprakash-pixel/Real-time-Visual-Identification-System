@@ -1,0 +1,9 @@
+{
+  "P0": "We set up this tracking window and give it a permanent address. We reserve the address for the server and create one Python environment. We also need the Supabase address and key from the teammate who owns that project, so that the server can read the registered persons.",
+  "P1": "This is the core of the third module. When the AI says it found someone, the alert engine checks the result, saves it in a small database, and tells every channel. Weak or repeated results are dropped, so the operator is not flooded.",
+  "P2": "One small web server gives the frontend everything it already asks for: login, status, the list of detections, the list of persons, the live video, and a live alert channel. Every route except the health check needs a login.",
+  "P3": "The AI runs inside the server. Each confirmed match goes to the alert engine. A background job copies registered persons from Supabase into the AI, so a person that the operator registers is watched for within about 30 seconds.",
+  "P4": "We turn off the fake data in the frontend and connect the real server. The dashboard shows live video, a popup and an alarm sound when a match happens. The server also serves the frontend, so the product runs from one address.",
+  "P5": "We prove the whole chain with a test video. A registered person must raise exactly one alert. An unregistered person must raise none. We also break things on purpose (camera, Supabase, network) and check that the system recovers.",
+  "P6": "We change the README and the landing page to say only what we verified. We push the work to GitHub and add a summary note to the vault."
+}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
+import AlertPopup from './AlertPopup'
 import '../styles/Home.css'
 
 export default function Layout() {
@@ -19,6 +20,7 @@ export default function Layout() {
 
   return (
     <div className="home-layout">
+      <AlertPopup />
       <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
