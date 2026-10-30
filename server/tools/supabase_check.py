@@ -26,8 +26,7 @@ if rows and rows[0].get("photo_path"):
     p = httpx.get(f"{s.supabase_url}/storage/v1/object/authenticated/{s.supabase_bucket}/{rows[0]['photo_path']}", headers=h, timeout=15)
     print(f"download first photo: HTTP {p.status_code}, {len(p.content)} bytes")
 
-# The publishable key must not be able to write. A successful insert here means RLS is open.
-w = httpx.post(f"{s.supabase_url}/rest/v1/{s.supabase_table}", headers={**h, "Prefer": "return=minimal"}, json={}, timeout=10)
-print(f"anonymous insert of an empty row: HTTP {w.status_code} (expect 4xx; 201 would mean writes are open)")
+# Read-only on purpose: this project is shared. Whether the key can also WRITE is a question for the
+# project owner (row-level security), not something to test against live data.
 ok = r.status_code == 200 and b.status_code == 200
 sys.exit(0 if ok else 1)
