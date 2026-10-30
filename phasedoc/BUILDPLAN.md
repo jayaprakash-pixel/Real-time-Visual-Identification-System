@@ -117,8 +117,10 @@ Legend: `[x]` done & verified · `[~]` partial · `[ ]` open
 - [x] **P6.1** README, module docs and landing-site status table match the verified state `<ops>`
   - _Acceptance:_ Every row of the README status table has a matching ticked leaf or an honest open leaf; site/src/App.jsx status tags updated
   - _verified 2026-10-30T23:34:21:_ README status table rewritten from verified results (each row maps to a ticked leaf or an honest partial: Supabase sync and real phone are marked Partial); site/src/App.jsx module tags updated (01 partial, 02 built, 03 built); site npm run build ok
-- [ ] **P6.2** Pushed to GitHub with the mirror committed; Pages site rebuilt `<ops>`
+- [~] **P6.2** Pushed to GitHub with the mirror committed; Pages site rebuilt `<ops>`
   - _Acceptance:_ `git status` clean; `gh run list -L 1` shows Deploy site success; Pages URL returns 200
+  - _partial 2026-10-30T23:37:24:_ partial progress
+  - _note 2026-10-30T23:37:24:_ Pushed (HEAD e41e57f), git status clean, Pages URL returns 200 from the first deploy. The Deploy site run for 9d62508 (new site status tags) has been queued at GitHub for 10+ minutes; tick when it shows success.
 - [x] **P6.3** Vault summary note and index entry for the arc `<ops>`
   - _Acceptance:_ 01-Projects/Real-time Visual Identification System/*.md exists with cockpit link; index.md lists it; log.md has an entry
   - _verified 2026-10-30T23:34:21:_ Vault note 01-Projects/Real-time Visual Identification System/Real-time Visual Identification System.md exists with cockpit link; index.md lists it; log.md entry appended
