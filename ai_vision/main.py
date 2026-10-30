@@ -78,12 +78,13 @@ class AIVisionPipeline:
     def __init__(self, source=0, camera_id="CAM01", on_match=print_match,
                  threshold=SFACE_COSINE_THRESHOLD, store_path=DEFAULT_STORE,
                  evidence_dir=DEFAULT_EVIDENCE_DIR, recognition_interval=10,
-                 alert_cooldown=30.0):
+                 alert_cooldown=30.0, on_frame=None):
         self.source = parse_source(source)
         self.camera_id = camera_id
         self.on_match = on_match
         self.threshold = threshold
         self.alert_cooldown = alert_cooldown
+        self.on_frame = on_frame    # optional: called with each annotated frame (the server streams it)
 
         self.engine = FaceEngine()
         self.store = ReferenceStore(store_path, engine=self.engine)
@@ -298,12 +299,15 @@ class AIVisionPipeline:
                 if elapsed >= 1.0:
                     fps, processed, fps_start = processed / elapsed, 0, time.perf_counter()
 
-                if display:
+                if display or self.on_frame:
                     age = (time.perf_counter() - capture_time) * 1000
-                    cv2.imshow("AI Vision - Missing Person Detection",
-                               self.draw(frame, tracks, fps, age))
-                    if cv2.waitKey(1) & 0xFF == ord("q"):
-                        break
+                    view = self.draw(frame, tracks, fps, age)
+                    if self.on_frame:
+                        self.on_frame(view)
+                    if display:
+                        cv2.imshow("AI Vision - Missing Person Detection", view)
+                        if cv2.waitKey(1) & 0xFF == ord("q"):
+                            break
         finally:
             self.stop_event.set()
             camera_thread.join(timeout=5)

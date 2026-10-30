@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "title": "Real-time Visual Identification System: alerts module and integration",
+    "arc": "rtvis",
+    "cockpit_port": 6801,
+    "brief": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/phasedoc/PLAN.md"
+  },
+  "tasks": [
+    {"id": "P0", "title": "Foundation: tracking window, ports, environment, Supabase access"},
+    {"id": "P0.1", "parent": "P0", "component": "ops", "title": "Phasedoc plan DB, plan of record, architecture, mirror", "acceptance": "`phasedoc/plan.cmd tree` prints P0-P6 and phasedoc/BUILDPLAN.md exists"},
+    {"id": "P0.2", "parent": "P0", "component": "ops", "title": "Cockpit on 127.0.0.1:6801 under PM2, registered in the Port Registry", "acceptance": "pm2-start-cockpit.log ends RESULT PASS (health 200 before and after Restart-Service PM2); registry row 6801 exists"},
+    {"id": "P0.3", "parent": "P0", "component": "ops", "title": "Server port 8010 registered; Python venv with pinned requirements for server + AI module", "acceptance": "`.venv\\Scripts\\python -c \"import cv2,fastapi,uvicorn,numpy\"` exits 0; registry row 8010 exists"},
+    {"id": "P0.4", "parent": "P0", "component": "supabase", "title": "Supabase URL and publishable key in .env (from teammate); schema of missing_persons and storage bucket documented", "acceptance": "`python server/tools/supabase_check.py` prints HTTP 200 for the missing_persons select and lists the bucket name; docs/supabase.md records column names"},
+
+    {"id": "P1", "title": "Alert engine (Module 3 logic)"},
+    {"id": "P1.1", "parent": "P1", "component": "alerts", "title": "Detection event model and SQLite store (insert, list with filters and paging, count)", "acceptance": "`python -m pytest server/tests/test_store.py` passes: insert 25 events, filter by person/camera/date, page size, count"},
+    {"id": "P1.2", "parent": "P1", "component": "alerts", "title": "Match verification gate: minimum confidence, per-person cooldown, rejects malformed results", "acceptance": "test_gate.py passes: below-threshold rejected, repeat inside cooldown dropped, repeat after cooldown accepted, missing field rejected with reason"},
+    {"id": "P1.3", "parent": "P1", "component": "alerts", "title": "Alert dispatcher: fan-out to channels, one failing channel never blocks the others", "acceptance": "test_dispatch.py passes: 3 fake channels, one raises; the other two still receive the alert and the failure is logged"},
+    {"id": "P1.4", "parent": "P1", "component": "alerts", "title": "Optional Telegram channel, off by default", "acceptance": "test_telegram.py passes against a local fake HTTP server: message sent when enabled, nothing sent when disabled, no token appears in logs"},
+
+    {"id": "P2", "title": "Backend server: the interface the frontend already expects"},
+    {"id": "P2.1", "parent": "P2", "component": "server", "title": "FastAPI app: /health, /api/system/status", "acceptance": "curl /health returns 200; curl /api/system/status returns JSON with monitoring, activeCamera, aiService"},
+    {"id": "P2.2", "parent": "P2", "component": "server", "title": "Operator auth: /api/auth/signup and /api/auth/login with hashed passwords and signed tokens; all other routes require the token", "acceptance": "test_auth.py passes: signup 200, duplicate 409, bad password 401, protected route without token 401, with token 200"},
+    {"id": "P2.3", "parent": "P2", "component": "server", "title": "GET /api/detections (list, filters, paging), /api/detections/count, evidence images served", "acceptance": "curl with token returns {items,total,page,pageSize} with camelCase fields from the frontend contract; sceneImageUrl returns image/jpeg"},
+    {"id": "P2.4", "parent": "P2", "component": "server", "title": "GET /api/persons?fields=id,name", "acceptance": "curl with token returns an array of {id,name} for every registered person"},
+    {"id": "P2.5", "parent": "P2", "component": "server", "title": "MJPEG live stream at /video/stream", "acceptance": "`curl -m 5 /video/stream` returns multipart/x-mixed-replace and at least 3 JPEG parts that decode"},
+    {"id": "P2.6", "parent": "P2", "component": "server", "title": "WebSocket /alerts pushes each accepted alert with the frontend payload shape", "acceptance": "test_ws.py passes: client connects with token, a dispatched alert arrives within 1 s; connect without token is refused"},
+
+    {"id": "P3", "title": "AI integration: Module 2 feeds Module 3"},
+    {"id": "P3.1", "parent": "P3", "component": "bridge", "title": "AI pipeline runs inside the server in a thread, headless, and exposes its latest annotated frame and state", "acceptance": "Server started on a video file: /api/system/status reports aiService up and monitoring active; /video/stream frames show boxes"},
+    {"id": "P3.2", "parent": "P3", "component": "bridge", "title": "on_match result goes through gate, store and dispatcher", "acceptance": "test_bridge.py passes with a sample AI result: one stored row, one WebSocket message, a second result inside cooldown is dropped"},
+    {"id": "P3.3", "parent": "P3", "component": "bridge", "title": "Supabase person sync: new rows are embedded into the reference store, deleted rows are removed, hot reload without restart", "acceptance": "Insert a test row with a photo in Supabase: within 30 s /api/persons lists it and the pipeline store length rises by 1; delete the row: it disappears"},
+    {"id": "P3.4", "parent": "P3", "component": "bridge", "title": "Config by environment: camera source, camera id, thresholds, cooldown, sync interval", "acceptance": ".env.example documents every key; server started with a changed key shows the new value in /api/system/status"},
+
+    {"id": "P4", "title": "Frontend wiring: mock mode off, real data"},
+    {"id": "P4.1", "parent": "P4", "component": "frontend", "title": "USE_MOCK comes from an env var; auth, detections, status and realtime call the real server", "acceptance": "With VITE_USE_MOCK=false, headless login succeeds against the server; History page renders rows from /api/detections; 0 console errors"},
+    {"id": "P4.2", "parent": "P4", "component": "frontend", "title": "Live feed panel shows the MJPEG stream; status badge follows /api/system/status", "acceptance": "Headless screenshot of the dashboard shows the stream image element loaded (naturalWidth > 0) and the badge text matches the API"},
+    {"id": "P4.3", "parent": "P4", "component": "frontend", "title": "Alert popup, alarm sound and browser notification on a live match", "acceptance": "Headless run: a dispatched alert makes the popup appear with person name and confidence within 2 s; audio element play() is called once"},
+    {"id": "P4.4", "parent": "P4", "component": "frontend", "title": "Server serves the built frontend, so one port serves the whole product", "acceptance": "`npm run build` succeeds; GET http://127.0.0.1:8010/ returns the app HTML; deep link /history returns it too"},
+
+    {"id": "P5", "title": "End to end proof and hardening"},
+    {"id": "P5.1", "parent": "P5", "component": "proof", "title": "End-to-end: video of a registered person to alert in the browser", "acceptance": "Scripted run: server on a test video, person registered, headless browser logged in; within 20 s one alert popup, one History row, one evidence scene file; recorded in phasedoc/E2E-RESULTS.md"},
+    {"id": "P5.2", "parent": "P5", "component": "proof", "title": "Negative end-to-end: a video of an unregistered person raises no alert", "acceptance": "Same script with a different face: 0 alerts, 0 History rows after 30 s"},
+    {"id": "P5.3", "parent": "P5", "component": "proof", "title": "Failure handling: camera drop, Supabase unreachable, WebSocket drop and reconnect", "acceptance": "Each fault injected in turn: server stays up, /api/system/status reflects it, the dashboard recovers without reload; results in E2E-RESULTS.md"},
+    {"id": "P5.4", "parent": "P5", "component": "proof", "title": "Security review: secrets, CORS, auth coverage, evidence access", "acceptance": "Checklist in docs/security.md with a command or test per line; `git grep` for keys finds none; unauthenticated evidence URL returns 401"},
+    {"id": "P5.5", "parent": "P5", "component": "ops", "title": "Server under PM2 on 8010 and survives a service restart", "acceptance": "pm2-start-server.log ends RESULT PASS (health 200 before and after Restart-Service PM2)"},
+
+    {"id": "P6", "title": "Documentation and release"},
+    {"id": "P6.1", "parent": "P6", "component": "ops", "title": "README, module docs and landing-site status table match the verified state", "acceptance": "Every row of the README status table has a matching ticked leaf or an honest open leaf; site/src/App.jsx status tags updated"},
+    {"id": "P6.2", "parent": "P6", "component": "ops", "title": "Pushed to GitHub with the mirror committed; Pages site rebuilt", "acceptance": "`git status` clean; `gh run list -L 1` shows Deploy site success; Pages URL returns 200"},
+    {"id": "P6.3", "parent": "P6", "component": "ops", "title": "Vault summary note and index entry for the arc", "acceptance": "01-Projects/Real-time Visual Identification System/*.md exists with cockpit link; index.md lists it; log.md has an entry"}
+  ]
+}

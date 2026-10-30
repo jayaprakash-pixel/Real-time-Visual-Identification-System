@@ -1,0 +1,14 @@
+[
+  {"group": "Arc documents", "label": "Plan of record", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/phasedoc/PLAN.md"},
+  {"group": "Arc documents", "label": "Architecture", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/phasedoc/ARCHITECTURE.md"},
+  {"group": "Arc documents", "label": "Buildplan mirror", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/phasedoc/BUILDPLAN.md"},
+  {"group": "Arc documents", "label": "Progress log", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/phasedoc/PROGRESS.md"},
+  {"group": "Code", "label": "Repository (working copy)", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System"},
+  {"group": "Code", "label": "AI vision (Module 2)", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/ai_vision"},
+  {"group": "Code", "label": "Frontend (Module 1)", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/frontend"},
+  {"group": "Code", "label": "Alerts and server (Module 3)", "path": "C:/whitenoise/WhiteNoise/Real-time-Visual-Identification-System/server"},
+  {"group": "Code", "label": "Shared phasedoc tooling", "path": "C:/whitenoise/phasedoc"},
+  {"group": "Services", "label": "GitHub repository", "href": "https://github.com/jayaprakash-pixel/Real-time-Visual-Identification-System"},
+  {"group": "Services", "label": "Landing site", "href": "https://jayaprakash-pixel.github.io/Real-time-Visual-Identification-System/"},
+  {"group": "Services", "label": "This cockpit (PM2: phasedoc-rtvis)", "href": "http://127.0.0.1:6801", "note": "loopback only"}
+]

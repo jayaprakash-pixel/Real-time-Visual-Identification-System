@@ -43,7 +43,10 @@ flowchart LR
 |---|---|
 | [`ai_vision/`](ai_vision) | Module 2. Live pipeline in Python and OpenCV (user stories US-01 to US-12). |
 | [`frontend/`](frontend) | Module 1. React operator console: login, registration, missing persons, detection history. |
-| [`alerts/`](alerts) | Module 3. Match verification and alert service. Early stage. |
+| [`server/`](server) | Module 3 plus the glue. Alert gate, detection store, alert dispatcher, REST API, live MJPEG stream, WebSocket alerts, Supabase person sync. Runs the AI in-process and serves the built frontend. |
+| [`alerts/`](alerts) | The original Module 3 console demo (kept for reference; superseded by `server/`). |
+| [`e2e/`](e2e) | Browser end-to-end and fault-injection runs. |
+| [`phasedoc/`](phasedoc) | Build tracker: plan, acceptance tests, and the results of every run. |
 | [`site/`](site) | Project landing page. Three.js 3D hero and Framer Motion animation. Deployed to GitHub Pages. |
 | [`docs/specs/`](docs/specs) | Project description and user stories. |
 
@@ -57,29 +60,48 @@ This table is deliberately honest.
 | Tracking, quality gate, selective recognition | ✅ Built | |
 | Matching, 3-of-5 verification, evidence capture | ✅ Built | Cosine threshold 0.363. |
 | Detection history search | ✅ Built | CLI in `ai_vision/us-12`. |
-| Frontend (login, register, persons, history) | 🟡 Partial | Persons use Supabase. Detections and live stream use mock mode until a backend exists. |
-| Alerts and match verification service | 🟠 Early | A console and beep demo only. |
-| Link between frontend, AI and alerts | 🔜 Roadmap | Next milestone. |
+| Alert engine: gate, store, dispatcher, optional Telegram | ✅ Built | 13 unit tests. 55% minimum confidence and 30 s per-person cooldown by default. |
+| Server: auth, detections API, live MJPEG, WebSocket alerts | ✅ Built | Auth on every route. Login throttle. See [`docs/security.md`](docs/security.md). |
+| AI → alerts → dashboard, end to end | ✅ Verified on video files | Registered person: 1 popup, 1 history row, 1 evidence image. Unregistered person: nothing. See [`phasedoc/E2E-RESULTS.md`](phasedoc/E2E-RESULTS.md). |
+| Fault recovery (camera drop, server restart, Supabase down) | ✅ Verified | Dashboard recovers without a reload. |
+| Frontend wired to the real server | ✅ Built | Set `VITE_USE_MOCK=false`. Popup, alarm sound, history, live feed. |
+| Supabase person sync | 🟡 Partial | Tested against a fake Supabase. **Not yet run against the real project** (keys pending). |
+| Phone camera over Wi-Fi | 🟡 Partial | A fake MJPEG phone camera was tested. A real phone was not. |
+| Server under PM2 (Windows) | ✅ Built | Survives a service restart. |
 
 ## Quick start
 
-**AI module**
+**Whole product (one port)**
+
+```bash
+python -m venv .venv && .venv\Scripts\activate
+pip install -r server/requirements.txt
+cp .env.example .env                  # camera source, Supabase URL + publishable key, optional Telegram
+cd frontend && cp .env.example .env && npm install && npm run build && cd ..
+set PYTHONPATH=server;ai_vision
+python server/run.py                  # http://127.0.0.1:8010
+```
+
+Open the address, create the first account (it becomes the admin), register a person, and watch the dashboard. Camera: `RTVIS_CAMERA_SOURCE=0` for a webcam, or `http://<phone-ip>:8080/video` for the IP Webcam phone app.
+
+**Tests**
+
+```bash
+python -m pytest                       # 46 tests; the face-based ones need RTVIS_TEST_FACES (see e2e/run.ps1)
+```
+
+**AI module alone** (no server)
 
 ```bash
 cd ai_vision
-python -m venv venv && venv\Scripts\activate
-pip install -r requirements.txt
 python us-05/reference_store.py capture MP001 "Your Name"   # register 5 poses
 python main.py                                              # laptop webcam
-python main.py --source http://<phone-ip>:8080/video --camera-id PHONE1
 ```
 
-**Frontend**
+**Frontend dev server** (hot reload; mock data unless `VITE_USE_MOCK=false` and the server is running)
 
 ```bash
-cd frontend
-cp .env.example .env     # add your Supabase URL and publishable key
-npm install && npm run dev
+cd frontend && npm install && npm run dev
 ```
 
 **Landing site**

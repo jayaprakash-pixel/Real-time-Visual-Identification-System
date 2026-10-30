@@ -33,7 +33,10 @@
  *   → Array<{ id: string, name: string }>
  */
 
-import { USE_MOCK, BASE_URL, request } from './apiClient'
+import { USE_MOCK, BASE_URL, request, serverUrl } from './apiClient'
+
+// Evidence image URLs from the real server are server-relative; make them absolute.
+export const withAbsoluteUrls = (d) => ({ ...d, sceneImageUrl: serverUrl(d.sceneImageUrl), thumbnailUrl: serverUrl(d.thumbnailUrl) })
 
 export { USE_MOCK, BASE_URL }
 
@@ -213,7 +216,8 @@ export async function getDetections(params = {}) {
 
   // TODO: connect backend endpoint
   const query = buildQueryString(params)
-  return request(`/detections${query}`)
+  const page = await request(`/detections${query}`)
+  return { ...page, items: page.items.map(withAbsoluteUrls) }
 }
 
 /**
@@ -228,7 +232,8 @@ export async function getRecentDetections(limit = 5) {
   }
 
   // TODO: connect backend endpoint
-  return request(`/detections?limit=${limit}&sortBy=detectedAt&sortOrder=desc`)
+  const rows = await request(`/detections?limit=${limit}&sortBy=detectedAt&sortOrder=desc`)
+  return rows.map(withAbsoluteUrls)
 }
 
 /**

@@ -10,12 +10,13 @@ import {
 import { getPersonsCount } from '../services/personsApi'
 import { getDetectionsCount } from '../services/detectionsApi'
 import { STREAM_URL } from '../services/systemApi'
+import { serverUrl } from '../services/apiClient'
 import { useSystemStatus } from '../context/SystemStatusContext'
 import '../styles/Home.css'
 import '../styles/Dashboard.css'
 
 export default function Home() {
-  const { systemStatus, realtimeState } = useSystemStatus()
+  const { systemStatus, realtimeState, alerts } = useSystemStatus()
 
   // ── Stat Card States ─────────────────────────────────────────────
   const [personsCount, setPersonsCount] = useState(null)
@@ -30,6 +31,13 @@ export default function Home() {
   const [streamError, setStreamError] = useState(false)
   const [streamCacheBuster, setStreamCacheBuster] = useState(0)
   const streamImgRef = useRef(null)
+
+  // The server hands out a stream URL with a short-lived token. Pick it once (the 10 s status poll
+  // must not restart the video) and take a fresh one on reconnect.
+  const freshStreamUrl = () => serverUrl(systemStatus.streamUrl) || STREAM_URL
+  const streamUrl = useRef('')
+  if (!streamUrl.current) streamUrl.current = freshStreamUrl()
+  const streamSrc = streamUrl.current
 
   // Fetch counts on mount
   const loadCounts = useCallback(async () => {
@@ -58,9 +66,10 @@ export default function Home() {
     }
   }, [])
 
+  // reload on mount and whenever a live alert arrives, so Total Detections stays current
   useEffect(() => {
     loadCounts()
-  }, [loadCounts])
+  }, [loadCounts, alerts.length])
 
   // Clean up surveillance stream image memory on unmount
   useEffect(() => {
@@ -73,9 +82,17 @@ export default function Home() {
   }, [])
 
   const handleReconnectStream = () => {
+    streamUrl.current = freshStreamUrl()
     setStreamError(false)
     setStreamCacheBuster(Date.now())
   }
+
+  // A dropped stream (camera restart, expired token) retries on its own every 3 s
+  useEffect(() => {
+    if (!streamError) return undefined
+    const t = setTimeout(handleReconnectStream, 3000)
+    return () => clearTimeout(t)
+  })
 
   return (
     <>
@@ -167,7 +184,7 @@ export default function Home() {
       </div>
 
       <div className="stream-panel-container">
-        {STREAM_URL && !streamError ? (
+        {streamSrc && !streamError ? (
           <div className="stream-media-wrapper">
             <div className="stream-badge-live">
               <span className="live-dot" />
@@ -177,8 +194,9 @@ export default function Home() {
               ref={streamImgRef}
               src={
                 streamCacheBuster
-                  ? `${STREAM_URL}${STREAM_URL.includes('?') ? '&' : '?'}cb=${streamCacheBuster}`
-                  : STREAM_URL
+                  ? `${streamSrc}${streamSrc.includes('?') ? '&' : '?'}cb=${streamCacheBuster}`
+                  
+: streamSrc
               }
               alt="Live surveillance camera stream"
               onError={() => setStreamError(true)}
@@ -195,7 +213,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-        ) : STREAM_URL && streamError ? (
+        ) : streamSrc && streamError ? (
           <div className="stream-placeholder">
             <Video size={48} />
             <p>Stream unavailable</p>

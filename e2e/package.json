@@ -1,0 +1,7 @@
+{
+  "name": "rtvis-e2e",
+  "private": true,
+  "type": "module",
+  "description": "Browser end-to-end checks for the running server. Uses the installed Edge/Chrome, no browser download.",
+  "dependencies": { "playwright-core": "^1.48.0" }
+}
