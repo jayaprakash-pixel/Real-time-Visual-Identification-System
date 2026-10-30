@@ -7,3 +7,4 @@
 - 2026-10-31 · P3 · AI runs inside the server; match -> gate -> store -> dispatch verified on video. Supabase sync tested against a FAKE Supabase only; real keys pending (P0.4, P3.3 stay open).
 - 2026-10-31 · P4 · Frontend wired (mock off, popup, alarm, live stream). Browser walk found and fixed a 401 on the pre-login status poll.
 - 2026-10-31 · P5 · End to end: registered person = 1 popup (<=481 ms), 1 history row, 1 evidence file; unregistered person = nothing; 10/10 fault checks; 46 tests; security review (docs/security.md); server under PM2 on 8010.
+- 2026-10-31 · P0 · Supabase connected (read-only check passed; PersonSync embedded the real row). P0.4 ticked. P3.3 stays partial until a live add/delete through the frontend.
