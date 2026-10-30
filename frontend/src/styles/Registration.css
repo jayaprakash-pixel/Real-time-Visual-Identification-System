@@ -1,0 +1,81 @@
+/* ════════════════════════════════════════════════
+   Registration Page Custom Additions
+   Uses only existing CSS variables from index.css
+   ════════════════════════════════════════════════ */
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--accent-red);
+  padding: var(--sp-4);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--sp-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.alert-error svg {
+  flex-shrink: 0;
+}
+
+/* Upload Progress Bar */
+.upload-progress-box {
+  margin-bottom: var(--sp-6);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--sp-3) var(--sp-4);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.upload-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-2);
+}
+
+.upload-progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.upload-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-600), var(--accent-teal));
+  border-radius: var(--radius-full);
+  transition: width 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mock-test-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: var(--sp-2);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.mock-chip {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  padding: 2px var(--sp-2);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: monospace;
+}
+
+.mock-chip:hover {
+  color: var(--primary-500);
+  border-color: var(--primary-500);
+}
