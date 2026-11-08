@@ -17,6 +17,12 @@ Register a missing person once. The AI watches the live feed and confirms them o
 
 ---
 
+## See it work
+
+<img src="docs/assets/demo.svg" alt="Animated dashboard preview: a live feed, a face is verified, an alert pops up and the history gains a row" width="100%"/>
+
+<sub>Illustration made of simple shapes. No real person appears in this repository.</sub>
+
 ## How it works
 
 <img src="docs/assets/pipeline.svg" alt="Animated pipeline" width="100%"/>

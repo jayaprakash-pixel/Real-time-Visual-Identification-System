@@ -1,25 +1,102 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" width="900" height="300" role="img" aria-label="Real-time Visual Identification System">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-label="Real-time Visual Identification System: a face is scanned, locked on, verified and matched">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f0e17"/><stop offset="1" stop-color="#241c30"/></linearGradient>
-    <linearGradient id="tx" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".5" stop-color="#ec4899"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#8b5cf6" stroke-opacity=".12"/></pattern>
-    <clipPath id="face"><rect x="90" y="50" width="200" height="200" rx="12"/></clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0a14"/><stop offset=".55" stop-color="#1a1230"/><stop offset="1" stop-color="#0d1a24"/></linearGradient>
+    <linearGradient id="title" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".5" stop-color="#ec4899"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+    <linearGradient id="shine" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14b8a6" stop-opacity="0"/><stop offset=".5" stop-color="#5eead4" stop-opacity=".95"/><stop offset="1" stop-color="#14b8a6" stop-opacity="0"/></linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".35"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#8b5cf6" stroke-opacity=".13"/>
+      <animateTransform attributeName="patternTransform" type="translate" from="0 0" to="32 32" dur="6s" repeatCount="indefinite"/>
+    </pattern>
+    <clipPath id="clipText"><rect x="380" y="92" width="540" height="130"/></clipPath>
+    <clipPath id="clipHead"><ellipse cx="190" cy="206" rx="62" ry="80"/></clipPath>
   </defs>
-  <rect width="900" height="300" rx="18" fill="url(#bg)"/><rect width="900" height="300" rx="18" fill="url(#grid)"/>
-  <g clip-path="url(#face)">
-    <ellipse cx="190" cy="140" rx="52" ry="68" fill="none" stroke="#8b5cf6" stroke-width="2"/>
-    <g fill="#14b8a6"><circle cx="170" cy="125" r="4"/><circle cx="210" cy="125" r="4"/><circle cx="190" cy="148" r="4"/><circle cx="174" cy="172" r="4"/><circle cx="206" cy="172" r="4"/>
-      <animate attributeName="opacity" values=".3;1;.3" dur="2s" repeatCount="indefinite"/></g>
-    <rect x="90" y="50" width="200" height="3" fill="#ec4899" opacity=".9"><animate attributeName="y" values="50;247;50" dur="3s" repeatCount="indefinite"/></rect>
+
+  <rect width="960" height="400" rx="20" fill="url(#bg)"/>
+  <rect width="960" height="400" rx="20" fill="url(#grid)"/>
+  <circle cx="190" cy="206" r="190" fill="url(#glow)"><animate attributeName="r" values="170;205;170" dur="5s" repeatCount="indefinite"/></circle>
+
+  <!-- floating particles -->
+  <g fill="#c4b5fd">
+    <circle cx="70" cy="340" r="2"><animate attributeName="cy" values="360;40" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="9s" repeatCount="indefinite"/></circle>
+    <circle cx="330" cy="360" r="1.6"><animate attributeName="cy" values="380;30" dur="7s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="7s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cx="560" cy="350" r="2.2"><animate attributeName="cy" values="370;40" dur="10s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="10s" begin="2s" repeatCount="indefinite"/></circle>
+    <circle cx="760" cy="360" r="1.8"><animate attributeName="cy" values="380;30" dur="8s" begin="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="8s" begin="3s" repeatCount="indefinite"/></circle>
+    <circle cx="900" cy="330" r="2"><animate attributeName="cy" values="350;50" dur="11s" begin=".5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="11s" begin=".5s" repeatCount="indefinite"/></circle>
+    <circle cx="450" cy="370" r="1.4"><animate attributeName="cy" values="390;30" dur="12s" begin="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="12s" begin="4s" repeatCount="indefinite"/></circle>
   </g>
-  <g fill="none" stroke="#14b8a6" stroke-width="3" stroke-linecap="round">
-    <path d="M90 80V50H120"/><path d="M260 50H290V80"/><path d="M90 220V250H120"/><path d="M260 250H290V220"/>
-    <animate attributeName="stroke-opacity" values="1;.4;1" dur="1.6s" repeatCount="indefinite"/>
+
+  <!-- radar rings -->
+  <g fill="none" stroke="#14b8a6">
+    <circle cx="190" cy="206" r="60"><animate attributeName="r" values="60;175" dur="3.6s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values=".55;0" dur="3.6s" repeatCount="indefinite"/></circle>
+    <circle cx="190" cy="206" r="60"><animate attributeName="r" values="60;175" dur="3.6s" begin="1.2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values=".55;0" dur="3.6s" begin="1.2s" repeatCount="indefinite"/></circle>
+    <circle cx="190" cy="206" r="60"><animate attributeName="r" values="60;175" dur="3.6s" begin="2.4s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values=".55;0" dur="3.6s" begin="2.4s" repeatCount="indefinite"/></circle>
   </g>
-  <text x="330" y="125" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="800" fill="url(#tx)">Real-time Visual</text>
-  <text x="330" y="170" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="800" fill="url(#tx)">Identification System</text>
-  <text x="330" y="205" font-family="Segoe UI,Arial,sans-serif" font-size="16" fill="#94a3b8">Phone as CCTV · AI on the laptop · instant missing-person alerts</text>
-  <rect x="330" y="225" width="176" height="28" rx="14" fill="#14b8a6" fill-opacity=".15" stroke="#14b8a6"/>
-  <circle cx="348" cy="239" r="5" fill="#14b8a6"><animate attributeName="r" values="4;7;4" dur="1.4s" repeatCount="indefinite"/></circle>
-  <text x="362" y="244" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#14b8a6">MATCH CONFIRMED · 3/5</text>
+
+  <!-- the face: a wireframe head that slowly turns -->
+  <g stroke="#a78bfa" fill="none" stroke-width="1.3">
+    <ellipse cx="190" cy="206" rx="62" ry="80" stroke-width="2"/>
+    <ellipse cx="190" cy="206" rx="40" ry="80" stroke-opacity=".6"><animate attributeName="rx" values="40;12;40;62;40" dur="8s" repeatCount="indefinite"/></ellipse>
+    <ellipse cx="190" cy="206" rx="18" ry="80" stroke-opacity=".45"><animate attributeName="rx" values="18;54;18;4;18" dur="8s" repeatCount="indefinite"/></ellipse>
+    <path d="M130 186H250M135 226H245M150 252H230" stroke-opacity=".4"/>
+    <path d="M148 150Q190 128 232 150" stroke-opacity=".5"/>
+  </g>
+  <g fill="#5eead4">
+    <circle cx="168" cy="190" r="3.5"/><circle cx="212" cy="190" r="3.5"/><circle cx="190" cy="214" r="3.5"/>
+    <circle cx="172" cy="240" r="3.5"/><circle cx="208" cy="240" r="3.5"/>
+    <animate attributeName="opacity" values=".35;1;.35" dur="1.6s" repeatCount="indefinite"/>
+  </g>
+  <g stroke="#5eead4" stroke-opacity=".55" stroke-width="1" fill="none"><path d="M168 190L190 214L212 190M172 240L190 214L208 240"/></g>
+  <g clip-path="url(#clipHead)"><rect x="120" y="120" width="140" height="26" fill="url(#scan)"><animate attributeName="y" values="110;270;110" dur="3.2s" repeatCount="indefinite"/></rect></g>
+
+  <style>
+    @keyframes lock{0%{transform:scale(1.7);opacity:0}12%{opacity:1}26%{transform:scale(1)}90%{transform:scale(1);opacity:1}100%{transform:scale(1.15);opacity:0}}
+    @keyframes s1{0%,34%{opacity:1}38%,100%{opacity:0}}
+    @keyframes s2{0%,34%{opacity:0}38%,58%{opacity:1}62%,100%{opacity:0}}
+    @keyframes s3{0%,60%{opacity:0;transform:scale(.7)}66%{opacity:1;transform:scale(1.08)}70%,90%{opacity:1;transform:scale(1)}96%,100%{opacity:0}}
+    @keyframes flash{0%,60%{opacity:0}63%{opacity:.3}78%,100%{opacity:0}}
+    @keyframes fill{0%,36%{width:0}56%{width:96px}100%{width:96px}}
+    @keyframes shine{from{transform:translateX(-420px) skewX(-20deg)}to{transform:translateX(560px) skewX(-20deg)}}
+    .brackets{transform-box:fill-box;transform-origin:center;animation:lock 9s ease-in-out infinite}
+    .s1{animation:s1 9s infinite}.s2{animation:s2 9s infinite}
+    .s3{animation:s3 9s infinite;transform-box:fill-box;transform-origin:center}
+    .flash{animation:flash 9s infinite}
+    .shine{animation:shine 4.5s linear infinite}
+    .cap{font:600 12px 'Segoe UI',Arial,sans-serif;letter-spacing:.08em}
+  </style>
+
+  <!-- lock-on brackets: close in, then turn amber (verifying) and red (match) -->
+  <g class="brackets" fill="none" stroke-width="4" stroke-linecap="round">
+    <path d="M112 142V112H142"/><path d="M238 112H268V142"/><path d="M112 270V300H142"/><path d="M238 300H268V270"/>
+    <animate attributeName="stroke" values="#14b8a6;#14b8a6;#f59e0b;#f59e0b;#ef4444;#ef4444;#14b8a6" keyTimes="0;.28;.36;.55;.62;.9;1" dur="9s" repeatCount="indefinite"/>
+  </g>
+  <rect x="20" y="20" width="920" height="360" rx="14" fill="#ef4444" class="flash"/>
+
+  <!-- status chip above the face -->
+  <g transform="translate(190 92)" text-anchor="middle">
+    <g class="s1"><rect x="-60" y="-14" width="120" height="26" rx="13" fill="#14b8a6" fill-opacity=".18" stroke="#14b8a6"/><text class="cap" y="4" fill="#5eead4">SCANNING</text></g>
+    <g class="s2"><rect x="-70" y="-14" width="140" height="26" rx="13" fill="#f59e0b" fill-opacity=".18" stroke="#f59e0b"/><text class="cap" y="4" fill="#fbbf24">VERIFYING 2 / 5</text></g>
+    <g class="s3"><rect x="-76" y="-14" width="152" height="26" rx="13" fill="#ef4444" fill-opacity=".25" stroke="#ef4444"/><text class="cap" y="4" fill="#fca5a5">MATCH CONFIRMED</text></g>
+  </g>
+  <!-- verification bar under the face -->
+  <g transform="translate(142 322)"><rect width="96" height="6" rx="3" fill="#ffffff" fill-opacity=".1"/>
+    <rect height="6" rx="3" fill="#14b8a6" style="animation:fill 9s linear infinite"/></g>
+
+  <!-- title -->
+  <g font-family="'Segoe UI',Arial,sans-serif">
+    <text x="380" y="140" font-size="48" font-weight="800" fill="url(#title)">Real-time Visual</text>
+    <text x="380" y="198" font-size="48" font-weight="800" fill="url(#title)">Identification System</text>
+    <g clip-path="url(#clipText)"><rect class="shine" x="0" y="92" width="120" height="130" fill="url(#shine)"/></g>
+    <text x="382" y="238" font-size="18" fill="#a1a1b5">A phone is the CCTV. The laptop is the control room.</text>
+    <text x="382" y="264" font-size="18" fill="#a1a1b5">Register once. The AI confirms the person on live video.</text>
+  </g>
+
+  <!-- feature chips -->
+  <g font-family="'Segoe UI',Arial,sans-serif" font-size="13" font-weight="600">
+    <g transform="translate(382 300)"><rect width="104" height="30" rx="15" fill="#8b5cf6" fill-opacity=".18" stroke="#8b5cf6"/><text x="52" y="20" text-anchor="middle" fill="#c4b5fd">YuNet + SFace</text></g>
+    <g transform="translate(498 300)"><rect width="112" height="30" rx="15" fill="#ec4899" fill-opacity=".18" stroke="#ec4899"/><text x="56" y="20" text-anchor="middle" fill="#f9a8d4">3-of-5 verify</text></g>
+    <g transform="translate(622 300)"><rect width="104" height="30" rx="15" fill="#14b8a6" fill-opacity=".18" stroke="#14b8a6"/><text x="52" y="20" text-anchor="middle" fill="#5eead4">Live alerts</text></g>
+    <g transform="translate(738 300)"><rect width="110" height="30" rx="15" fill="#f59e0b" fill-opacity=".18" stroke="#f59e0b"/><text x="55" y="20" text-anchor="middle" fill="#fcd34d">Apache-2.0</text></g>
+  </g>
 </svg>

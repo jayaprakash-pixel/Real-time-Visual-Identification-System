@@ -1,17 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 190" width="900" height="190" role="img" aria-label="Pipeline: camera, buffer, detect, track, embed, match, verify, alert">
-  <rect width="900" height="190" rx="14" fill="#0f0e17"/>
-  <style>.n{fill:#1a1625;stroke:#8b5cf6;stroke-width:1.5}.t{font:600 12px Segoe UI,Arial,sans-serif;fill:#f1f5f9;text-anchor:middle}.s{font:10px Segoe UI,Arial,sans-serif;fill:#94a3b8;text-anchor:middle}
-  .f{stroke:#ec4899;stroke-width:2;stroke-dasharray:6 6;animation:d 1s linear infinite;fill:none}@keyframes d{to{stroke-dashoffset:-12}}
-  .a{animation:p 4s ease-in-out infinite}@keyframes p{0%,100%{stroke:#8b5cf6}50%{stroke:#14b8a6}}</style>
-  <path class="f" d="M105 95H135M215 95H245M325 95H355M435 95H465M545 95H575M655 95H685M765 95H795"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 250" width="960" height="250" role="img" aria-label="Pipeline: camera, latest-frame buffer, detect, track, embed, match, verify, alert. A packet of data travels through each stage.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0a14"/><stop offset="1" stop-color="#171128"/></linearGradient>
+    <linearGradient id="line" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".5" stop-color="#ec4899"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+    <radialGradient id="pk"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#f9a8d4"/><stop offset="1" stop-color="#ec4899" stop-opacity="0"/></radialGradient>
+    <path id="track" d="M70 112H889"/>
+  </defs>
+  <style>
+    @keyframes lit{0%{stroke:#2d2438;fill:#1a1625;transform:scale(1)}5%{stroke:#5eead4;fill:#12383a;transform:scale(1.08)}16%{stroke:#14b8a6;fill:#12383a;transform:scale(1.04)}26%,100%{stroke:#2d2438;fill:#1a1625;transform:scale(1)}}
+    @keyframes ico{0%{opacity:.55}5%,16%{opacity:1}26%,100%{opacity:.55}}
+    @keyframes flow{to{stroke-dashoffset:-24}}
+    .n{fill:#1a1625;stroke:#2d2438;stroke-width:2;animation:lit 6s infinite;transform-box:fill-box;transform-origin:center}
+    .i{animation:ico 6s infinite}
+    .flow{stroke:url(#line);stroke-width:3;stroke-dasharray:10 14;stroke-linecap:round;fill:none;animation:flow 1.1s linear infinite;opacity:.8}
+    .t{font:700 14px 'Segoe UI',Arial,sans-serif;fill:#f1f5f9;text-anchor:middle}
+    .s{font:12px 'Segoe UI',Arial,sans-serif;fill:#94a3b8;text-anchor:middle}
+    .k{font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ec4899;text-anchor:middle;letter-spacing:.1em}
+  </style>
+  <rect width="960" height="250" rx="18" fill="url(#bg)"/>
+
+  <use href="#track" class="flow"/>
+
+  <!-- stage nodes: x centre = 70 + 117*i, each lights up as the packet reaches it -->
   <g>
-    <rect class="n a" x="25" y="65" width="80" height="60" rx="10" style="animation-delay:0s"/><text class="t" x="65" y="92">Camera</text><text class="s" x="65" y="108">phone/CCTV</text>
-    <rect class="n a" x="135" y="65" width="80" height="60" rx="10" style="animation-delay:.5s"/><text class="t" x="175" y="92">Buffer</text><text class="s" x="175" y="108">latest frame</text>
-    <rect class="n a" x="245" y="65" width="80" height="60" rx="10" style="animation-delay:1s"/><text class="t" x="285" y="92">Detect</text><text class="s" x="285" y="108">YuNet</text>
-    <rect class="n a" x="355" y="65" width="80" height="60" rx="10" style="animation-delay:1.5s"/><text class="t" x="395" y="92">Track</text><text class="s" x="395" y="108">track IDs</text>
-    <rect class="n a" x="465" y="65" width="80" height="60" rx="10" style="animation-delay:2s"/><text class="t" x="505" y="92">Embed</text><text class="s" x="505" y="108">SFace 128-d</text>
-    <rect class="n a" x="575" y="65" width="80" height="60" rx="10" style="animation-delay:2.5s"/><text class="t" x="615" y="92">Match</text><text class="s" x="615" y="108">cosine ≥ 0.363</text>
-    <rect class="n a" x="685" y="65" width="80" height="60" rx="10" style="animation-delay:3s"/><text class="t" x="725" y="92">Verify</text><text class="s" x="725" y="108">3 of 5 frames</text>
-    <rect class="n a" x="795" y="65" width="80" height="60" rx="10" style="animation-delay:3.5s"/><text class="t" x="835" y="92">Alert</text><text class="s" x="835" y="108">scene + log</text>
+    <rect class="n" x="28" y="70" width="84" height="84" rx="18" style="animation-delay:0s"/>
+    <rect class="n" x="145" y="70" width="84" height="84" rx="18" style="animation-delay:.857s"/>
+    <rect class="n" x="262" y="70" width="84" height="84" rx="18" style="animation-delay:1.714s"/>
+    <rect class="n" x="379" y="70" width="84" height="84" rx="18" style="animation-delay:2.571s"/>
+    <rect class="n" x="496" y="70" width="84" height="84" rx="18" style="animation-delay:3.428s"/>
+    <rect class="n" x="613" y="70" width="84" height="84" rx="18" style="animation-delay:4.285s"/>
+    <rect class="n" x="730" y="70" width="84" height="84" rx="18" style="animation-delay:5.142s"/>
+    <rect class="n" x="847" y="70" width="84" height="84" rx="18" style="animation-delay:5.999s"/>
+  </g>
+
+  <!-- icons -->
+  <g fill="none" stroke="#e2e8f0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <g class="i" style="animation-delay:0s"><rect x="50" y="98" width="40" height="28" rx="6"/><circle cx="70" cy="112" r="8"/><path d="M58 98l3-6h18l3 6"/></g>
+    <g class="i" style="animation-delay:.857s"><rect x="162" y="124" width="50" height="10" rx="3"/><rect x="162" y="109" width="50" height="10" rx="3" stroke-opacity=".6"/><rect x="162" y="94" width="50" height="10" rx="3" stroke-opacity=".3"/><path d="M200 140l8-4-8-4" transform="translate(-4 2)"/></g>
+    <g class="i" style="animation-delay:1.714s"><path d="M286 100v-8h8M326 92h8v8M286 124v8h8M326 132h8v-8" transform="translate(-6 -2)"/><ellipse cx="304" cy="112" rx="12" ry="16"/><path d="M298 108h.1M310 108h.1M304 120q-4 3-8 0" stroke-width="3"/></g>
+    <g class="i" style="animation-delay:2.571s"><circle cx="410" cy="100" r="5"/><circle cx="432" cy="116" r="5"/><circle cx="414" cy="132" r="5"/><path d="M414 104l14 8M428 120l-10 10" stroke-dasharray="3 3"/></g>
+    <g class="i" style="animation-delay:3.428s"><path d="M512 98v28M524 90v44M536 104v22M548 94v36M560 108v14M572 100v22" stroke-width="3.4"/></g>
+    <g class="i" style="animation-delay:4.285s"><circle cx="640" cy="112" r="15"/><circle cx="660" cy="112" r="15"/><path d="M650 100v24" stroke-opacity=".4"/></g>
+    <g class="i" style="animation-delay:5.142s"><rect x="746" y="102" width="9" height="20" rx="2" fill="#14b8a6" stroke="none"/><rect x="758" y="102" width="9" height="20" rx="2" fill="#14b8a6" stroke="none"/><rect x="770" y="102" width="9" height="20" rx="2" fill="#14b8a6" stroke="none"/><rect x="782" y="102" width="9" height="20" rx="2"/><rect x="794" y="102" width="9" height="20" rx="2"/></g>
+    <g class="i" style="animation-delay:5.999s"><path d="M889 92a14 14 0 0 1 14 14v10l6 8H869l6-8v-10a14 14 0 0 1 14-14Z" stroke="#ef4444"/><path d="M882 136a7 7 0 0 0 14 0" stroke="#ef4444"/></g>
+  </g>
+
+  <!-- labels -->
+  <g>
+    <text class="t" x="70" y="184">Camera</text><text class="s" x="70" y="202">phone · CCTV</text>
+    <text class="t" x="187" y="184">Buffer</text><text class="s" x="187" y="202">latest frame only</text>
+    <text class="t" x="304" y="184">Detect</text><text class="s" x="304" y="202">YuNet + landmarks</text>
+    <text class="t" x="421" y="184">Track</text><text class="s" x="421" y="202">stable track IDs</text>
+    <text class="t" x="538" y="184">Embed</text><text class="s" x="538" y="202">SFace · 128 numbers</text>
+    <text class="t" x="655" y="184">Match</text><text class="s" x="655" y="202">cosine ≥ 0.363</text>
+    <text class="t" x="772" y="184">Verify</text><text class="s" x="772" y="202">3 of last 5 checks</text>
+    <text class="t" x="889" y="184">Alert</text><text class="s" x="889" y="202">popup · sound · log</text>
+  </g>
+  <text class="k" x="480" y="40">ONE FRAME'S JOURNEY</text>
+  <text class="s" x="480" y="228" fill="#64748b">Older frames are dropped on purpose. The AI always works on the newest picture.</text>
+
+  <!-- data packets travelling through the pipeline -->
+  <g>
+    <circle r="11" fill="url(#pk)"><animateMotion dur="6s" repeatCount="indefinite" path="M70 112H889"/></circle>
+    <circle r="7" fill="url(#pk)" opacity=".6"><animateMotion dur="6s" begin=".22s" repeatCount="indefinite" path="M70 112H889"/></circle>
+    <circle r="4" fill="url(#pk)" opacity=".4"><animateMotion dur="6s" begin=".44s" repeatCount="indefinite" path="M70 112H889"/></circle>
   </g>
 </svg>

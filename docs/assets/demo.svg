@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Animated preview of the dashboard: a live feed with two people, one is recognised, an alert pops up and the history gains a row">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f0e17"/><stop offset="1" stop-color="#1c1530"/></linearGradient>
+    <linearGradient id="brand" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+    <linearGradient id="feed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1830"/><stop offset="1" stop-color="#0c0b16"/></linearGradient>
+    <pattern id="fgrid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#8b5cf6" stroke-opacity=".1"/></pattern>
+    <clipPath id="clipFeed"><rect x="276" y="236" width="356" height="262" rx="10"/></clipPath>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity=".5"/></filter>
+    <g id="person">
+      <circle cx="0" cy="-70" r="17"/><path d="M-28 -42Q0 -56 28 -42L34 40H-34Z"/>
+    </g>
+  </defs>
+  <style>
+    .f{font-family:'Segoe UI',Arial,sans-serif}
+    @keyframes walk{0%{transform:translateX(-70px)}100%{transform:translateX(470px)}}
+    @keyframes enter{0%{transform:translateX(470px);opacity:0}6%{opacity:1}34%,86%{transform:translateX(190px);opacity:1}94%,100%{transform:translateX(190px);opacity:0}}
+    @keyframes boxA{0%,18%{opacity:0}26%,50%{opacity:1}56%,100%{opacity:0}}
+    @keyframes boxB{0%,34%{opacity:1}56%,100%{opacity:0}}
+    @keyframes boxC{0%,55%{opacity:0}58%,88%{opacity:1}94%,100%{opacity:0}}
+    @keyframes alert{0%,58%{transform:translateY(-110px);opacity:0}64%,86%{transform:translateY(0);opacity:1}94%,100%{transform:translateY(-110px);opacity:0}}
+    @keyframes row{0%,60%{opacity:0;transform:translateX(30px)}66%,100%{opacity:1;transform:translateX(0)}}
+    @keyframes rowflash{0%,60%{opacity:0}64%{opacity:.5}80%,100%{opacity:0}}
+    @keyframes cnt0{0%,59%{opacity:1}60%,100%{opacity:0}}
+    @keyframes cnt1{0%,59%{opacity:0}60%,100%{opacity:1}}
+    @keyframes live{0%,100%{opacity:1}50%{opacity:.25}}
+    @keyframes wave{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2);opacity:0}}
+    @keyframes sweep{0%{transform:translateY(0)}100%{transform:translateY(262px)}}
+    .walker{animation:walk 12s linear infinite}
+    .target{animation:enter 12s ease-in-out infinite}
+    .bA{animation:boxA 12s infinite}.bB{animation:boxB 12s infinite}.bC{animation:boxC 12s infinite}
+    .alert{animation:alert 12s cubic-bezier(.2,.9,.3,1.2) infinite}
+    .row{animation:row 12s ease-out infinite}.rowflash{animation:rowflash 12s infinite}
+    .c0{animation:cnt0 12s infinite}.c1{animation:cnt1 12s infinite}
+    .live{animation:live 1.4s infinite}
+    .wave{animation:wave 1.2s ease-out infinite;transform-box:fill-box;transform-origin:center}
+    .sweep{animation:sweep 3s linear infinite}
+    .lbl{font:600 11px 'Segoe UI',Arial,sans-serif}
+  </style>
+
+  <rect width="960" height="540" rx="18" fill="url(#bg)"/>
+  <!-- browser chrome -->
+  <rect x="16" y="14" width="928" height="512" rx="12" fill="#14111f" stroke="#2d2438"/>
+  <circle cx="40" cy="36" r="6" fill="#ef4444"/><circle cx="60" cy="36" r="6" fill="#f59e0b"/><circle cx="80" cy="36" r="6" fill="#22c55e"/>
+  <rect x="110" y="24" width="360" height="24" rx="12" fill="#1e1830"/><text x="128" y="41" class="f" font-size="12" fill="#a1a1b5">127.0.0.1:8010</text>
+
+  <!-- sidebar -->
+  <rect x="16" y="58" width="220" height="468" fill="#120f1d"/>
+  <rect x="34" y="74" width="30" height="30" rx="8" fill="url(#brand)"/>
+  <text x="76" y="95" class="f" font-size="16" font-weight="700" fill="#f1f5f9">Surveillance</text>
+  <g class="f" font-size="13" fill="#94a3b8">
+    <rect x="28" y="128" width="196" height="34" rx="9" fill="#8b5cf6" fill-opacity=".18" stroke="#8b5cf6" stroke-opacity=".5"/>
+    <text x="46" y="150" fill="#f1f5f9">Dashboard</text>
+    <text x="46" y="186">Register Person</text><text x="46" y="222">Missing Persons</text><text x="46" y="258">Detection History</text>
+  </g>
+  <circle cx="44" cy="488" r="14" fill="#7c3aed"/><text x="44" y="493" text-anchor="middle" class="f" font-size="13" font-weight="700" fill="#fff">O</text>
+  <text x="68" y="486" class="f" font-size="12" font-weight="600" fill="#f1f5f9">Operator</text><text x="68" y="502" class="f" font-size="10" fill="#64748b">Admin</text>
+
+  <!-- header -->
+  <text x="262" y="92" class="f" font-size="20" font-weight="700" fill="#f1f5f9">Command Center</text>
+  <circle cx="800" cy="86" r="5" fill="#14b8a6" class="live"/><text x="812" y="90" class="f" font-size="12" fill="#5eead4">System Active</text>
+
+  <!-- stat cards -->
+  <g class="f">
+    <g transform="translate(262 112)"><rect width="162" height="74" rx="12" fill="#1a1625" stroke="#2d2438"/><text x="16" y="26" font-size="10" fill="#64748b" letter-spacing=".08em">REGISTERED</text><text x="16" y="56" font-size="26" font-weight="700" fill="#f1f5f9">1</text></g>
+    <g transform="translate(436 112)"><rect width="162" height="74" rx="12" fill="#1a1625" stroke="#2d2438"/><text x="16" y="26" font-size="10" fill="#64748b" letter-spacing=".08em">DETECTIONS</text>
+      <text x="16" y="56" font-size="26" font-weight="700" fill="#f1f5f9" class="c0">0</text><text x="16" y="56" font-size="26" font-weight="700" fill="#14b8a6" class="c1">1</text></g>
+    <g transform="translate(610 112)"><rect width="162" height="74" rx="12" fill="#1a1625" stroke="#2d2438"/><text x="16" y="26" font-size="10" fill="#64748b" letter-spacing=".08em">MONITORING</text><circle cx="22" cy="50" r="5" fill="#14b8a6" class="live"/><text x="34" y="56" font-size="18" font-weight="600" fill="#f1f5f9">Active</text></g>
+    <g transform="translate(784 112)"><rect width="144" height="74" rx="12" fill="#1a1625" stroke="#2d2438"/><text x="16" y="26" font-size="10" fill="#64748b" letter-spacing=".08em">CAMERA</text><text x="16" y="56" font-size="17" font-weight="600" fill="#f1f5f9">PHONE1</text></g>
+  </g>
+
+  <!-- live feed -->
+  <text x="262" y="222" class="f" font-size="14" font-weight="700" fill="#f1f5f9">Live Surveillance Feed</text>
+  <rect x="276" y="236" width="356" height="262" rx="10" fill="url(#feed)" stroke="#2d2438"/>
+  <g clip-path="url(#clipFeed)">
+    <rect x="276" y="236" width="356" height="262" fill="url(#fgrid)"/>
+    <rect x="276" y="236" width="356" height="3" fill="#14b8a6" fill-opacity=".35" class="sweep"/>
+    <rect x="276" y="470" width="356" height="28" fill="#0a0912"/>
+    <!-- stranger: walks across, green box, never matches -->
+    <g class="walker"><g transform="translate(276 440)">
+      <use href="#person" fill="#3b3a55"/>
+      <rect x="-40" y="-96" width="80" height="140" rx="3" fill="none" stroke="#22c55e" stroke-width="2"/>
+      <text x="-38" y="-102" class="lbl" fill="#22c55e">#1</text>
+    </g></g>
+    <!-- the registered person: boxed, verified, matched -->
+    <g class="target"><g transform="translate(276 440)">
+      <use href="#person" fill="#4c3f7a"/>
+      <g class="bA"><rect x="-44" y="-100" width="88" height="148" rx="3" fill="none" stroke="#22c55e" stroke-width="2.5"/><text x="-42" y="-106" class="lbl" fill="#22c55e">#2 scanning</text></g>
+      <g class="bB"><rect x="-44" y="-100" width="88" height="148" rx="3" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="7 4"/><text x="-42" y="-106" class="lbl" fill="#f59e0b">#2 verifying 3/5</text></g>
+      <g class="bC"><rect x="-44" y="-100" width="88" height="148" rx="3" fill="none" stroke="#ef4444" stroke-width="3.5"/><text x="-42" y="-106" class="lbl" fill="#ef4444">#2 Registered person</text></g>
+    </g></g>
+  </g>
+  <rect x="290" y="248" width="52" height="20" rx="10" fill="#14b8a6" fill-opacity=".18" stroke="#14b8a6"/><circle cx="303" cy="258" r="4" fill="#14b8a6" class="live"/><text x="311" y="262" class="lbl" fill="#5eead4">LIVE</text>
+
+  <!-- right column: history -->
+  <g class="f">
+    <text x="660" y="222" font-size="14" font-weight="700" fill="#f1f5f9">Detection History</text>
+    <rect x="660" y="236" width="268" height="262" rx="10" fill="#1a1625" stroke="#2d2438"/>
+    <text x="676" y="262" font-size="10" fill="#64748b" letter-spacing=".08em">PERSON</text><text x="780" y="262" font-size="10" fill="#64748b" letter-spacing=".08em">CAMERA</text><text x="852" y="262" font-size="10" fill="#64748b" letter-spacing=".08em">MATCH</text>
+    <path d="M668 272H920" stroke="#2d2438"/>
+    <text x="676" y="360" font-size="12" fill="#475569" class="c0">Waiting for detections...</text>
+    <g class="row"><rect x="668" y="282" width="252" height="40" rx="8" fill="#ef4444" fill-opacity=".1"/>
+      <rect x="668" y="282" width="252" height="40" rx="8" fill="#ef4444" class="rowflash"/>
+      <rect x="676" y="290" width="24" height="24" rx="6" fill="#4c3f7a"/><text x="708" y="306" font-size="12" font-weight="600" fill="#f1f5f9">Registered</text>
+      <text x="780" y="306" font-size="12" fill="#cbd5e1">PHONE1</text><text x="852" y="306" font-size="12" font-weight="700" fill="#14b8a6">97%</text></g>
+  </g>
+
+  <!-- alert popup slides in from the top right -->
+  <g class="alert" filter="url(#shadow)">
+    <g transform="translate(626 52)">
+      <rect width="302" height="104" rx="14" fill="#1e1830" stroke="#ef4444"/>
+      <rect x="12" y="12" width="80" height="80" rx="10" fill="#2b2147"/>
+      <use href="#person" fill="#6d5bb0" transform="translate(52 86) scale(.48)"/>
+      <g transform="translate(106 28)"><circle cx="8" cy="-3" r="9" fill="#ef4444" fill-opacity=".35" class="wave"/><path d="M8 -8a5 5 0 0 1 5 5v4H3v-4a5 5 0 0 1 5 -5Z" fill="#ef4444"/>
+        <text x="26" y="3" class="lbl" fill="#ef4444" letter-spacing=".06em">MATCH FOUND</text></g>
+      <text x="106" y="58" class="f" font-size="17" font-weight="700" fill="#f1f5f9">Registered person</text>
+      <text x="106" y="78" class="f" font-size="12" fill="#a1a1b5">97% confidence · PHONE1</text>
+      <text x="106" y="94" class="f" font-size="11" fill="#14b8a6">View in history →</text>
+    </g>
+  </g>
+</svg>
