@@ -71,14 +71,17 @@ This table is deliberately honest.
 
 ## Quick start
 
-**Whole product (one port)**
+**You need:** Python 3.11+, Node.js 18+, a camera (webcam, or a phone running the "IP Webcam" app), and a Supabase project with a `missing_persons` table and a `person-photos` bucket (see [`docs/supabase.md`](docs/supabase.md)). Tested on Windows 11. The face models are included in the repo (`ai_vision/us-02/models`), so no download is needed.
 
-```bash
-python -m venv .venv && .venv\Scripts\activate
-pip install -r server/requirements.txt
-cp .env.example .env                  # camera source, Supabase URL + publishable key, optional Telegram
-cd frontend && cp .env.example .env && npm install && npm run build && cd ..
-set PYTHONPATH=server;ai_vision
+**Whole product (one port)** (PowerShell; on Linux/macOS use `source .venv/bin/activate` and `/` paths)
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt       # server + AI module
+cp .env.example .env                  # then edit: camera source, Supabase URL + publishable key
+cp frontend\.env.example frontend\.env   # then edit: the same Supabase URL + key
+cd frontend; npm install; npm run build; cd ..
 python server/run.py                  # http://127.0.0.1:8010
 ```
 
@@ -87,7 +90,7 @@ Open the address, create the first account (it becomes the admin), register a pe
 **Tests**
 
 ```bash
-python -m pytest                       # 46 tests; the face-based ones need RTVIS_TEST_FACES (see e2e/run.ps1)
+python -m pytest                       # 46 tests; 3 face-based ones are skipped unless RTVIS_TEST_FACES points to test photos
 ```
 
 **AI module alone** (no server)
