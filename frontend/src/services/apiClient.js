@@ -9,7 +9,9 @@
 /**
  * Global mock toggle. Set to `false` when connecting to a real backend.
  */
-export const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'
+// Dev server (npm run dev) defaults to mock data; a production build defaults to the real server.
+// Override either way with VITE_USE_MOCK=true|false.
+export const USE_MOCK = import.meta.env.VITE_USE_MOCK ? import.meta.env.VITE_USE_MOCK !== 'false' : import.meta.env.DEV
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
